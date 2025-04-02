@@ -1,4 +1,3 @@
-
 class Product:
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
@@ -12,9 +11,9 @@ class Category:
     product_count = 0
     name: str
     description: str
-    products: list
+    __products: list
 
-    def __init__(self, name, description,products=None):
+    def __init__(self, name, description, products=None):
         if products is None:
             products = []
         self.name = name

@@ -1,12 +1,26 @@
 import pytest
-
 from src.classes import Product, Category
 
 
+# Фикстуры
 @pytest.fixture
-def product():
-    return Product(name="Товар 1", description="Описание товара", price=100.50, quantity=10)
+def sample_product():
+    return Product("Test Product", "Description", 100.0, 5)
+
 
 @pytest.fixture
-def category(product):
-    return Category(name="Категория 1", description="Описание категории", products=[product])
+def sample_products():
+    return [
+        Product("Product 1", "Desc 1", 100, 2),
+        Product("Product 2", "Desc 2", 200, 3),
+    ]
+
+
+@pytest.fixture
+def empty_category():
+    return Category("Empty Category", "Description")
+
+
+@pytest.fixture
+def category_with_products(sample_products):
+    return Category("Test Category", "Description", sample_products)
