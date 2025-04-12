@@ -1,4 +1,3 @@
-import pytest
 from src.classes import Category
 
 
@@ -34,3 +33,5 @@ def test_product_count(sample_products):
     Category("New Category", "Desc", sample_products)
     assert Category.product_count == initial_count + len(sample_products)
 
+
+# тесты 14.2
