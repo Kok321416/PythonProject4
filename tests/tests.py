@@ -34,4 +34,8 @@ def test_product_count(sample_products):
     assert Category.product_count == initial_count + len(sample_products)
 
 
-# тесты 14.2
+def test_product_str(product1):
+    assert str(product1) == "Samsung Galaxy S23 Ultra, 180000.0 руб., Остаток: 5 шт."
+
+def test_product_add(product1,product2):
+    assert (product1.price * product1.quantity) + (product2.price * product2.quantity) == 1920000.0
