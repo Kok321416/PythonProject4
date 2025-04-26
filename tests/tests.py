@@ -1,6 +1,6 @@
 import pytest
 
-from src.classes import Category
+from src.classes import Category, Smartphone
 
 
 # Тесты для Product
@@ -66,3 +66,29 @@ def test_subintase(empty_category):
 
     assert Category.product_count == initial_count
     assert len(empty_category.products) == 0
+
+
+import pytest
+
+
+def test_smartphone_initialization(sample_smartphones):
+    """Тест корректности инициализации смартфона"""
+    assert sample_smartphones.name == "Samsung Galaxy S23 Ultra"
+    assert sample_smartphones.description == "256GB, Серый цвет, 200MP камера"
+    assert sample_smartphones.price == 180000.0
+    assert sample_smartphones.quantity == 5
+    assert sample_smartphones.efficiency == 95.5
+    assert sample_smartphones.model == "S23 Ultra"
+    assert sample_smartphones.memory == 256
+    assert sample_smartphones.color == "Серый"
+
+
+def test_lawn_grass_initialization(sample_grass1):
+    """Тест корректности инициализации газонной травы"""
+    assert sample_grass1.name == "Газонная трава"
+    assert sample_grass1.description == "Элитная трава для газона"
+    assert sample_grass1.price == 500.0
+    assert sample_grass1.quantity == 20
+    assert sample_grass1.country == "Россия"
+    assert sample_grass1.germination_period == "7 дней"
+    assert sample_grass1.color == "Зеленый"
