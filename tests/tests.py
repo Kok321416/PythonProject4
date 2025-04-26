@@ -1,3 +1,5 @@
+import pytest
+
 from src.classes import Category
 
 
@@ -37,5 +39,30 @@ def test_product_count(sample_products):
 def test_product_str(product1):
     assert str(product1) == "Samsung Galaxy S23 Ultra, 180000.0 руб., Остаток: 5 шт."
 
-def test_product_add(product1,product2):
-    assert (product1.price * product1.quantity) + (product2.price * product2.quantity) == 1920000.0
+
+def test_product_add(product1, product2):
+    assert (product1.price * product1.quantity) + (
+        product2.price * product2.quantity
+    ) == 1920000.0
+
+
+def test_add(sample_grass1, sample_smartphones, capsys):
+    """Тест попытки сложить смартфон и траву"""
+    with pytest.raises(TypeError) as excinfo:
+        add_smartphone_and_grass = sample_smartphones + sample_grass1
+    assert "Нельзя складывать товары разных классов" in str(excinfo.value)
+
+
+def test_subintase(empty_category):
+    """проверяет Теперь защитим метод так, чтобы, кроме смартфонов, травы газонной или других продуктов, в список нельзя было добавлять ничего другого."""
+
+    class NotAProduct:
+        pass
+
+    not_a_product = NotAProduct()
+    initial_count = Category.product_count
+    with pytest.raises(TypeError):
+        empty_category.add_product(not_a_product)
+
+    assert Category.product_count == initial_count
+    assert len(empty_category.products) == 0
