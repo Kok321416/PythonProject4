@@ -1,20 +1,30 @@
 from abc import ABC, abstractmethod
 
-# class BaseProduct(ABC):
-#     @abstractmethod
-#     def __init__(self):
-#         pass
-#
-#
-# class MixinLog:
-#     pass
+
+class BaseProduct(ABC):
+    @abstractmethod
+    def __init__(self, name: str, description: str, price: float, quantity: int):
+        """Абстрактный метод инициализации продукта"""
+        pass
 
 
-class Product:
-    def __init__(
-        self, name: str, description: str, price: float, quantity: int
-    ) -> object:
-        # super().__init__(name, description, price, quantity)
+class MixinLog:
+    """Миксин для вывода информации о продукте"""
+
+    def __init__(self, name: str, description: str, price: float, quantity: int):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.quantity = quantity
+
+    def __repr__(self):
+        """Метод для вывода информации о продукте"""
+        return f"{self.name}, {self.description}, {self.price}, {self.quantity}"
+
+
+class Product(MixinLog, BaseProduct):
+    def __init__(self, name: str, description: str, price: float, quantity: int):
+        super().__init__(name, description, price, quantity)
         self.name = name
         self.description = description
         self.__price = price
@@ -23,12 +33,7 @@ class Product:
     @classmethod
     def new_product(cls, product_data: dict):
         """Класс-метод для создания нового продукта из словаря с данными"""
-        return cls(
-            name=product_data["name"],
-            description=product_data["description"],
-            price=product_data["price"],
-            quantity=product_data["quantity"],
-        )
+        return cls(**product_data)
 
     @property
     def price(self):
@@ -45,8 +50,9 @@ class Product:
         return f"{self.name}, {self.price} руб., Остаток: {self.quantity} шт."
 
     def __add__(self, other):
-        if isinstance(other, Product):
-            return (self.__price * self.quantity) + (other.price * other.quantity)
+        if not isinstance(other, self.__class__):
+            raise TypeError("Нельзя складывать товары разных классов")
+        return (self.price * self.quantity) + (other.price * other.quantity)
 
 
 class Category:
