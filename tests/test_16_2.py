@@ -1,4 +1,5 @@
-from src import *
+import pytest
+
 from src.classes import Product
 
 
@@ -25,3 +26,11 @@ def test_print_mixing(capsys):
         captured.out.strip()
         == "Product('Xiaomi Redmi Note 11','1024GB, Синий','31000.0','14')"
     )
+
+
+def test_value_error():
+    with pytest.raises(
+        ValueError,
+        match="Товар с нулевым количеством не может быть добавлен",
+    ):
+        Product("Бракованный товар", "Неверное количество", 1000.0, 0)

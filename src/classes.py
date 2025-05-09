@@ -7,6 +7,9 @@ class Product(BaseProduct, MixinLog):
         self.name = name
         self.description = description
         self.__price = price
+
+        if quantity <= 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         self.quantity = quantity
         super().__init__()
 
@@ -72,6 +75,16 @@ class Category:
     def __str__(self):
         total_quantity = sum(product.quantity for product in self.__products)
         return f"{self.name}, количество продуктов: {total_quantity} шт."
+
+    def middle_price(self):
+        """средний ценник всех предметов"""
+        try:
+            if not self.__products:
+                return 0
+            total_price = sum(product.price for product in self.__products)
+            return total_price / len(self.__products)
+        except ZeroDivisionError:
+            return 0
 
 
 class Smartphone(Product):
