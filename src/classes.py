@@ -1,34 +1,14 @@
-from abc import ABC, abstractmethod
+from src.abstract_metod import BaseProduct
+from src.mixin_class import MixinLog
 
 
-class BaseProduct(ABC):
-    @abstractmethod
+class Product(BaseProduct, MixinLog):
     def __init__(self, name: str, description: str, price: float, quantity: int):
-        """Абстрактный метод инициализации продукта"""
-        pass
-
-
-class MixinLog:
-    """Миксин для вывода информации о продукте"""
-
-    def __init__(self, name: str, description: str, price: float, quantity: int):
-        self.name = name
-        self.description = description
-        self.price = price
-        self.quantity = quantity
-
-    def __repr__(self):
-        """Метод для вывода информации о продукте"""
-        return f"{self.name}, {self.description}, {self.price}, {self.quantity}"
-
-
-class Product(MixinLog, BaseProduct):
-    def __init__(self, name: str, description: str, price: float, quantity: int):
-        super().__init__(name, description, price, quantity)
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__()
 
     @classmethod
     def new_product(cls, product_data: dict):
@@ -53,6 +33,7 @@ class Product(MixinLog, BaseProduct):
         if type(self) == type(other):
             return (self.price * self.quantity) + (other.price * other.quantity)
         raise TypeError("Нельзя складывать товары разных классов")
+
 
 class Category:
     category_count = 0
